@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KivikangurBicycleExam", "KivikangurBicycleExam\KivikangurBicycleExam.csproj", "{7D2EC6C6-83F2-42F6-B83D-CC4C6555C4AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D2EC6C6-83F2-42F6-B83D-CC4C6555C4AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D2EC6C6-83F2-42F6-B83D-CC4C6555C4AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D2EC6C6-83F2-42F6-B83D-CC4C6555C4AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D2EC6C6-83F2-42F6-B83D-CC4C6555C4AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11A7C638-5C91-4C37-8A97-88165A0ACDEA}
+	EndGlobalSection
+EndGlobal
