@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using KivikangurBicycleExam.Models;
 
 namespace KivikangurBicycleExam.Data
 {
@@ -9,5 +10,6 @@ namespace KivikangurBicycleExam.Data
 						: base(options)
 		{
 		}
+		public DbSet<KivikangurBicycleExam.Models.Exam> Exam { get; set; }
 	}
 }
