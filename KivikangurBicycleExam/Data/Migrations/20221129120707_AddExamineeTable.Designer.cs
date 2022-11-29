@@ -4,6 +4,7 @@ using KivikangurBicycleExam.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KivikangurBicycleExam.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129120707_AddExamineeTable")]
+    partial class AddExamineeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,7 @@ namespace KivikangurBicycleExam.Data.Migrations
 
                     b.HasIndex("ExamineeId");
 
-                    b.ToTable("Exam", (string)null);
+                    b.ToTable("Exam");
                 });
 
             modelBuilder.Entity("KivikangurBicycleExam.Models.Examinee", b =>
@@ -74,7 +76,7 @@ namespace KivikangurBicycleExam.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Examinee", (string)null);
+                    b.ToTable("Examinee");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

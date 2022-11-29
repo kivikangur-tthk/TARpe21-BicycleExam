@@ -7,8 +7,8 @@ namespace KivikangurBicycleExam.Models
 		// Id=1, Name=Toomas, TR=15, 1 ,1 ,1 ,1
 		public int Id { get; set; }
 
-		[DisplayName("Examinee name")]
-		public string ExamineeName { get; set; } = "Anonymous";
+		public Examinee Examinee { get; set; }
+		public int ExamineeId { get; set; }
 		public int? TheoryResult { get; set; } 
 		public int? ParkingLotResult { get; set; }
 		public int? SlalomResult { get; set; }

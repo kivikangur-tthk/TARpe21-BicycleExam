@@ -19,33 +19,11 @@ namespace KivikangurBicycleExam.Controllers
 			_context = context;
 		}
 
-
-		public IActionResult Register()
-		{
-			return View();
-		}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Register([Bind("Id,ExamineeName")] Exam exam)
-		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(exam);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			return View(exam);
-		}
-
-
-
-
-
-
 		// GET: Exams
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.Exam.ToListAsync());
+			var applicationDbContext = _context.Exam.Include(e => e.Examinee);
+			return View(await applicationDbContext.ToListAsync());
 		}
 
 		// GET: Exams/Details/5
@@ -57,6 +35,7 @@ namespace KivikangurBicycleExam.Controllers
 			}
 
 			var exam = await _context.Exam
+							.Include(e => e.Examinee)
 							.FirstOrDefaultAsync(m => m.Id == id);
 			if (exam == null)
 			{
@@ -69,7 +48,15 @@ namespace KivikangurBicycleExam.Controllers
 		// GET: Exams/Create
 		public IActionResult Create()
 		{
+			ViewData["ExamineeId"] = CreateExamineeSelectList();
 			return View();
+		}
+
+		private List<SelectListItem> CreateExamineeSelectList(int? selected=null)
+		{
+			var selectList = new SelectList(_context.Set<Examinee>(), "Id", "SSID", selected).ToList();
+			selectList.Insert(0, new SelectListItem("Vali eksamineeritav","-1"));
+			return selectList;
 		}
 
 		// POST: Exams/Create
@@ -77,14 +64,19 @@ namespace KivikangurBicycleExam.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("Id,ExamineeName,TheoryResult,ParkingLotResult,SlalomResult,CircleResult")] Exam exam)
+		public async Task<IActionResult> Create([Bind("Id,ExamineeId,TheoryResult,ParkingLotResult,SlalomResult,CircleResult")] Exam exam)
 		{
+			var examinee = await _context.Examinee.FirstOrDefaultAsync(m => m.Id == exam.ExamineeId);
+			exam.Examinee = examinee;
+			ModelState.ClearValidationState(nameof(Exam.Examinee));
+			TryValidateModel(exam);
 			if (ModelState.IsValid)
 			{
 				_context.Add(exam);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+			ViewData["ExamineeId"] = CreateExamineeSelectList(exam.ExamineeId);
 			return View(exam);
 		}
 
@@ -101,6 +93,7 @@ namespace KivikangurBicycleExam.Controllers
 			{
 				return NotFound();
 			}
+			ViewData["ExamineeId"] = CreateExamineeSelectList(exam.ExamineeId);
 			return View(exam);
 		}
 
@@ -109,7 +102,7 @@ namespace KivikangurBicycleExam.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("Id,ExamineeName,TheoryResult,ParkingLotResult,SlalomResult,CircleResult")] Exam exam)
+		public async Task<IActionResult> Edit(int id, [Bind("Id,ExamineeId,TheoryResult,ParkingLotResult,SlalomResult,CircleResult")] Exam exam)
 		{
 			if (id != exam.Id)
 			{
@@ -136,6 +129,7 @@ namespace KivikangurBicycleExam.Controllers
 				}
 				return RedirectToAction(nameof(Index));
 			}
+			ViewData["ExamineeId"] = CreateExamineeSelectList(exam.ExamineeId);
 			return View(exam);
 		}
 
@@ -148,6 +142,7 @@ namespace KivikangurBicycleExam.Controllers
 			}
 
 			var exam = await _context.Exam
+							.Include(e => e.Examinee)
 							.FirstOrDefaultAsync(m => m.Id == id);
 			if (exam == null)
 			{

@@ -11,5 +11,6 @@ namespace KivikangurBicycleExam.Data
 		{
 		}
 		public DbSet<KivikangurBicycleExam.Models.Exam> Exam { get; set; }
+		public DbSet<KivikangurBicycleExam.Models.Examinee> Examinee { get; set; }
 	}
 }
