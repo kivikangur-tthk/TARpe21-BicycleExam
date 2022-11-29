@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KivikangurBicycleExam.Data;
 using KivikangurBicycleExam.Models;
+using Microsoft.AspNetCore.Authentication;
 
 namespace KivikangurBicycleExam.Controllers
 {
@@ -19,8 +20,26 @@ namespace KivikangurBicycleExam.Controllers
             _context = context;
         }
 
-        // GET: Examinees
-        public async Task<IActionResult> Index()
+		public IActionResult Register()
+		{
+			return View();
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Register([Bind("Id,FirstName,LastName,SSID")] Examinee examinee)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Add(examinee);
+				await _context.SaveChangesAsync();
+    return RedirectToAction(nameof(ExamsController.Create),
+                            nameof(ExamsController).Replace("Controller", ""));
+			}
+			return View(examinee);
+		}
+
+		// GET: Examinees
+		public async Task<IActionResult> Index()
         {
               return View(await _context.Examinee.ToListAsync());
         }
