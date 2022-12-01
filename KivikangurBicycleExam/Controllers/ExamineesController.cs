@@ -32,8 +32,9 @@ namespace KivikangurBicycleExam.Controllers
 			{
 				_context.Add(examinee);
 				await _context.SaveChangesAsync();
-    return RedirectToAction(nameof(ExamsController.Create),
-                            nameof(ExamsController).Replace("Controller", ""));
+    return RedirectToAction(nameof(ExamsController.CreateForUser),
+                            nameof(ExamsController).Replace("Controller", ""),
+                            new {examineeId=examinee.Id});
 			}
 			return View(examinee);
 		}

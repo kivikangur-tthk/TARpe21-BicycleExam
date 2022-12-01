@@ -175,5 +175,20 @@ namespace KivikangurBicycleExam.Controllers
 		{
 			return _context.Exam.Any(e => e.Id == id);
 		}
+
+		public async Task<IActionResult> CreateForUser(int examineeId)
+		{
+			var examinee = await _context.Examinee.FirstOrDefaultAsync(m => m.Id == examineeId);
+			var exam = new Exam() { ExamineeId = examineeId, Examinee = examinee };
+			_context.Exam.Add(exam);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(ShowTheoryTable));
+		}
+
+		public async Task<IActionResult> ShowTheoryTable()
+		{
+				var applicationDbContext = _context.Exam.Include(e => e.Examinee).Where(ex=>ex.TheoryResult==null);
+				return View(await applicationDbContext.ToListAsync());			
+		}
 	}
 }
