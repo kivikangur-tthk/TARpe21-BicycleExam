@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Exam>
+<table class="table">
+ <thead>
+  <tr>
+   <th>
+                @Html.DisplayNameFor(model => model.Examinee.LastName)
+   </th>
+   <th>
+                @Html.DisplayNameFor(model => model.TheoryResult)
+   </th>
+   <th>
+                @Html.DisplayNameFor(model => model.ParkingLotResult)
+   </th>
+   <th>
+                @Html.DisplayNameFor(model => model.SlalomResult)
+   </th>
+   <th>
+                @Html.DisplayNameFor(model => model.CircleResult)
+   </th>
+   <th></th>
+  </tr>
+ </thead>
+ <tbody>
+        @foreach (var item in Model)
+        {
+      <tr>
+       <td>
+                    @Html.DisplayFor(modelItem => item.Examinee.LastName)
+       </td>
+       <td>
+                    @Html.DisplayFor(modelItem => item.TheoryResult)
+       </td>
+       <td>
+                    @Html.DisplayFor(modelItem => item.ParkingLotResult)
+       </td>
+       <td>
+                    @Html.DisplayFor(modelItem => item.SlalomResult)
+       </td>
+       <td>
+                    @Html.DisplayFor(modelItem => item.CircleResult)
+       </td>
+       <td>
+       </td>
+      </tr>
+        }
+ </tbody>
+</table>

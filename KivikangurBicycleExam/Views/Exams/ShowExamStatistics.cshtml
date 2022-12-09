@@ -1,0 +1,23 @@
+﻿@model KivikangurBicycleExam.Models.ViewModels.ExamStatsViewModel
+
+@{
+    ViewData["Title"] = "Show Stats for Exams";
+    Exam first = Model.RegisteredExams.FirstOrDefault()??
+                Model.IncompleteExams.FirstOrDefault()??
+                Model.CompletedExams.FirstOrDefault()??
+                new Exam();
+}
+
+<h1>Show Statistics for Exams</h1>
+
+<h2>Registered</h2>
+
+<partial name="_TableView" model="Model.RegisteredExams" />
+
+<h2>Incomplete</h2>
+
+<partial name="_TableView" model="Model.IncompleteExams" />
+
+<h2>Completed</h2>
+
+<partial name="_TableView" model="Model.CompletedExams" />

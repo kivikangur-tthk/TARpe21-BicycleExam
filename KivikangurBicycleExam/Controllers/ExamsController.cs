@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KivikangurBicycleExam.Data;
 using KivikangurBicycleExam.Models;
+using KivikangurBicycleExam.Models.ViewModels;
 
 namespace KivikangurBicycleExam.Controllers
 {
@@ -190,5 +191,31 @@ namespace KivikangurBicycleExam.Controllers
 				var applicationDbContext = _context.Exam.Include(e => e.Examinee).Where(ex=>ex.TheoryResult==null);
 				return View(await applicationDbContext.ToListAsync());			
 		}
+		public async Task<IActionResult> ShowExamStatistics()
+		{
+			var registeredExams = await _context.Exam.Include(e=>e.Examinee)
+				.Where(ex=>ex.TheoryResult==null).ToListAsync();
+			var completedExams = await _context.Exam.Include(e=>e.Examinee)
+				.Where(ex=>ex.TheoryResult!=null && 
+															ex.CircleResult!=null &&
+															ex.SlalomResult!=null &&
+															ex.ParkingLotResult!=null).ToListAsync();
+			var incompleteExams = await _context.Exam.Include(e => e.Examinee)
+				.Where(ex => ex.TheoryResult != null &&
+															(ex.CircleResult == null ||
+															ex.SlalomResult == null ||
+															ex.ParkingLotResult == null)).ToListAsync();
+
+			var result = new ExamStatsViewModel()
+			{
+				RegisteredExams = registeredExams,
+				IncompleteExams = incompleteExams,
+				CompletedExams = completedExams
+			};
+
+			return View(result);
+		}
+
+
 	}
 }
